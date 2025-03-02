@@ -1,44 +1,45 @@
 import java.util.Random;
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+
+    static int randNum;
+    static int guess;
+    static int attempts = 0;
+    static String playAgain = "";
+    static boolean replay = true;
+    static String difficulty;
+
+    static Scanner scanner = new Scanner(System.in);
+    static Random random = new Random();
+
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
-
-        // TODO: ADD DIFFICULTIES (EASY, MEDIUM HARD)
-
-        // 0-10 should be easy difficulty
-
+        System.out.println("**************************************");
         System.out.println("Welcome to Mike's Number Guessing Game");
+        System.out.println("**************************************");
 
-        int randNum;
-        int guess;
-        int attempts = 1;
-        String playAgain = "";
-        boolean replay = true;
+        // DO WHILE LOOP WITH INPUT VERIFICATION
 
         do {
 
-            System.out.println("A number between 0-10 has been selected, take a guess!");
-            randNum = random.nextInt(11);
-            guess = scanner.nextInt();
-            scanner.nextLine();
+            System.out.print("Choose a difficulty (easy, medium, hard): ");
+            difficulty = scanner.nextLine().toLowerCase();
 
-            while(guess != randNum){
-                System.out.println("Wrong, try again!");
-                System.out.println("Try again!");
-                guess = scanner.nextInt();
-                scanner.nextLine();
-                attempts++;
+            while(!difficulty.equals("easy") && !difficulty.equals("medium") && !difficulty.equals("hard")){
+                System.out.println("Invalid choice, please choose one of the three difficulties");
+                System.out.print("Choose a difficulty (easy, medium, hard): ");
+                difficulty = scanner.nextLine().toLowerCase();
             }
 
-            System.out.println("Correct!");
-            System.out.println("It took you " + attempts + " attempt(s) to guess the number");
-            attempts = 1;
+            switch (difficulty) {
+                case "easy" -> easySpin();
+                case "medium" -> mediumSpin();
+                case "hard" -> hardSpin();
+            }
+
+            System.out.printf("It took you %d attempt(s) to guess the number\n", attempts);
+            attempts = 0;
 
             playAgain = "";
 
@@ -49,10 +50,8 @@ public class Main {
 
                 if (playAgain.equals("yes")) {
                     replay = true;
-                    break;
                 } else if (playAgain.equals("no")) {
                     replay = false;
-                    break;
                 } else {
                     System.out.print("Invalid input! Must choose yes or no: ");
                 }
@@ -67,4 +66,111 @@ public class Main {
 
         scanner.close();
     }
+
+    // EASY DIFFICULTY
+
+    static void easySpin(){
+
+        System.out.println("------------------------------------------------------");
+        System.out.println("A number between 1-10 has been selected, take a guess!");
+        randNum = random.nextInt(1, 11);
+
+        do {
+
+            guess = scanner.nextInt();
+            scanner.nextLine();
+
+            if (guess > 10 || guess < 1){
+                System.out.println("Invalid choice, you must guess between 1-10!");
+                continue;
+            }
+
+            if(guess > randNum){
+                System.out.println("The number is lower than your guess!");
+            }
+            else if(guess < randNum){
+                System.out.println("The number is greater than your guess!");
+            }
+            else{
+                System.out.println("Correct!");
+            }
+
+            attempts++;
+
+        }
+        while(guess != randNum);
+
+
+    }
+
+    // MEDIUM DIFFICULTY
+
+    static void mediumSpin(){
+
+        System.out.println("------------------------------------------------------");
+        System.out.println("A number between 1-50 has been selected, take a guess!");
+        randNum = random.nextInt(1, 51);
+
+        do {
+
+            guess = scanner.nextInt();
+            scanner.nextLine();
+
+            if (guess > 50 || guess < 1){
+                System.out.println("Invalid choice, you must guess between 1-50!");
+                continue;
+            }
+
+            if(guess > randNum){
+                System.out.println("The number is lower than your guess!");
+            }
+            else if(guess < randNum){
+                System.out.println("The number is greater than your guess!");
+            }
+            else{
+                System.out.println("Correct!");
+            }
+
+            attempts++;
+
+        }
+        while(guess != randNum);
+
+    }
+
+    // HARD DIFFICULTY
+
+    static void hardSpin(){
+
+        System.out.println("------------------------------------------------------");
+        System.out.println("A number between 1-100 has been selected, take a guess!");
+        randNum = random.nextInt(1, 101);
+
+        do {
+
+            guess = scanner.nextInt();
+            scanner.nextLine();
+
+            if (guess > 100 || guess < 1){
+                System.out.println("Invalid choice, you must guess between 1-100!");
+                continue;
+            }
+
+            if(guess > randNum){
+                System.out.println("The number is lower than your guess!");
+            }
+            else if(guess < randNum){
+                System.out.println("The number is greater than your guess!");
+            }
+            else{
+                System.out.println("Correct!");
+            }
+
+            attempts++;
+
+        }
+        while(guess != randNum);
+
+    }
+
 }
